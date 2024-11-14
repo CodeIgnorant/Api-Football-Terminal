@@ -21,13 +21,16 @@ def process_fixture_data(fixtures, season_year):
     # Once calculations are complete, create a DataFrame
     df = pd.DataFrame(fixtures_data)
     
+    # Check if there are any missing values
+    missing_values_exist = df[['Halftime Home Score', 'Halftime Away Score', 'Fulltime Home Score', 'Fulltime Away Score']].isnull().any().any()
+    
     # Handle missing values by filling them with 0 (correct way)
-    df['Halftime Home Score'] = df['Halftime Home Score'].fillna(0)
-    df['Halftime Away Score'] = df['Halftime Away Score'].fillna(0)
-    df['Fulltime Home Score'] = df['Fulltime Home Score'].fillna(0)
-    df['Fulltime Away Score'] = df['Fulltime Away Score'].fillna(0)
-
-    # Print a message indicating manipulation
-    print("Data manipulation: Empty values were filled with '0'.")
+    if missing_values_exist:
+        df['Halftime Home Score'] = df['Halftime Home Score'].fillna(0)
+        df['Halftime Away Score'] = df['Halftime Away Score'].fillna(0)
+        df['Fulltime Home Score'] = df['Fulltime Home Score'].fillna(0)
+        df['Fulltime Away Score'] = df['Fulltime Away Score'].fillna(0)
+        # Print a message indicating manipulation
+        print("Data manipulation: Empty values were filled with '0'.")
     
     return df
