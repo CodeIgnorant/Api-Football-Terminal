@@ -4,10 +4,13 @@ def process_fixture_data(fixtures, season_year):
     # Convert JSON data to a list of dictionaries with selected information
     fixtures_data = []
     for fixture in fixtures:
+        # Extract relevant data and process "Round" to keep only numerical values
+        round_raw = fixture.get("league", {}).get("round", "")
+        round_numeric = int(round_raw.split("-")[-1].strip()) if "-" in round_raw else None
+        
         fixtures_data.append({
-            "Fixture ID": fixture.get("fixture", {}).get("id"),
+            "Round": round_numeric,  # Only the numeric value of "Round"
             "Status Short": fixture.get("fixture", {}).get("status", {}).get("short"),
-            "Round": fixture.get("league", {}).get("round"),
             "Home Team ID": fixture.get("teams", {}).get("home", {}).get("id"),
             "Home Team Name": fixture.get("teams", {}).get("home", {}).get("name"),
             "Away Team ID": fixture.get("teams", {}).get("away", {}).get("id"),
@@ -18,7 +21,7 @@ def process_fixture_data(fixtures, season_year):
             "Fulltime Away Score": fixture.get("score", {}).get("fulltime", {}).get("away")
         })
     
-    # Once calculations are complete, create a DataFrame
+    # Create a DataFrame
     df = pd.DataFrame(fixtures_data)
     
     # Check if there are any missing values

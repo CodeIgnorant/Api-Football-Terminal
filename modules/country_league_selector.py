@@ -22,7 +22,7 @@ def select_country_and_league(api_client):
                 print(f"You selected: {country_name}")
                 
                 # Send request to 'leagues' endpoint to get current season leagues
-                leagues_response = api_client.send_request("leagues", country=country_name, current="true")
+                leagues_response = api_client.send_request("leagues", country=country_name, current="true", type="league")
                 if "error" in leagues_response:
                     print("Failed to retrieve leagues data for the selected country.")
                     return None, None

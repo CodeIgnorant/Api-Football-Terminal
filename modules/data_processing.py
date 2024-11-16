@@ -1,5 +1,3 @@
-# data_processing.py
-
 from modules.fixtures import process_fixture_data
 from modules.secondhalf_score import calculate_secondhalf_scores
 from modules.result import calculate_match_result
@@ -7,6 +5,7 @@ from modules.total_goals import calculate_total_goals
 from modules.over_under import calculate_over_under
 from modules.goal_range import calculate_goal_range
 from modules.both_team_score import calculate_both_team_score
+from modules.cs_fail_score import calculate_clean_sheets_and_fail_to_score  # Yeni ekleme
 
 def process_all_data(fixtures, season_year):
     """
@@ -22,5 +21,6 @@ def process_all_data(fixtures, season_year):
     df = calculate_over_under(df)
     df = calculate_goal_range(df)
     df = calculate_both_team_score(df)
+    df = calculate_clean_sheets_and_fail_to_score(df)
 
     return df
